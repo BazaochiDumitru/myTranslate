@@ -3,6 +3,7 @@ package com.example.mytranslate.repositories;
 import com.example.mytranslate.models.Definition;
 import com.example.mytranslate.models.Word;
 import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -66,8 +67,33 @@ public class WordTranslatorRepository {
         } catch (Exception e) {
             return false;
         }
-
     }
+
+    // delete
+    public boolean deleteDefinition(String word, String language, Definition dictionary, String dictType){
+        String fileName = "src/main/resources/translations/" +  language + "/"  + word + ".json";
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get(fileName));
+            Word wordModel = gson.fromJson(reader, Word.class);
+            reader.close();
+            wordModel.definitions.remove(dictionary);
+            try {
+                Writer writer = new FileWriter(fileName);
+                gson.toJson(wordModel, writer);
+                writer.close();
+            } catch (Exception e){
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // translate sentence
+
+
+    // get Definitions
 
 
 }
