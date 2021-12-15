@@ -17,4 +17,12 @@ public class Word {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
+
+    public ArrayList<Definition> getDefinitions() {
+        return definitions;
+    }
+
+    public void setDefinitions(ArrayList<Definition> definitions) {
+        this.definitions = definitions;
+    }
 }

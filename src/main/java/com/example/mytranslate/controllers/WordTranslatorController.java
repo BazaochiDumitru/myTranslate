@@ -5,6 +5,8 @@ import com.example.mytranslate.models.Word;
 import com.example.mytranslate.repositories.WordTranslatorRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 public class WordTranslatorController {
 
@@ -33,20 +35,23 @@ public class WordTranslatorController {
     // Metodă pentru ștergerea unei definiții a unui cuvânt dat ca parametru o booleanremoveDefinition(Stringword, Stringlanguage, Stringdictionary)
     // Întoarce true dacă s-a șters definiția sau false dacă nu există o definiție din dicționarul primit ca parametru
     @DeleteMapping(path = "translate/word/{language}/{word}/{dictionary}")
-    public boolean deleteDefinition(@PathVariable String word, @PathVariable String language, @PathVariable String dictionary, @RequestBody Definition definition){
-        return wordTranslatorRepository.deleteDefinition(word, language, definition);
+    public boolean deleteDefinition(@PathVariable String word, @PathVariable String language, @PathVariable String dictionary){
+        return wordTranslatorRepository.deleteDefinition(word, language, dictionary);
     }
 
 
     // Metodă pentru traducerea unei propoziții o String translateSentence(String sentence, String fromLanguage, String toLanguage)
     // Întoarce traducerea propoziției sentence din limba fromLanguage în limba toLanguage
-
+    @GetMapping(path = "translate/sentences/{fromLanguage}/{toLanguage}/{sentence}")
+    String translateSentence(@PathVariable String sentence, @PathVariable String fromLanguage, @PathVariable String toLanguage) {
+        return wordTranslatorRepository.translateSentence(fromLanguage, toLanguage, sentence);
+    }
 
 
     // Metodă pentru întoarcerea definițiilor și sinonimelor unui cuvânt o ArrayList getDefinitionsForWord(String word, String language)
     // Definițiile sunt sortate crescător după anul de apariție al dicționarului
-    /*@GetMapping(path = "translate/word/{language}/{word}")
-    public String getDefinitionForWord(@PathVariable String word, @PathVariable String language){
+    @GetMapping(path = "translate/definition/word/{language}/{word}")
+    public ArrayList<Definition> getDefinitionForWord(@PathVariable String word, @PathVariable String language){
         return wordTranslatorRepository.getDefinitionForWord(word, language);
-    }*/
+    }
 }
