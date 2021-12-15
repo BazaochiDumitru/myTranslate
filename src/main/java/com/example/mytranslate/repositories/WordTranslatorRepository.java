@@ -70,13 +70,13 @@ public class WordTranslatorRepository {
     }
 
     // delete
-    public boolean deleteDefinition(String word, String language, Definition dictionary, String dictType){
+    public boolean deleteDefinition(String word, String language, Definition definition){
         String fileName = "src/main/resources/translations/" +  language + "/"  + word + ".json";
         try {
             Reader reader = Files.newBufferedReader(Paths.get(fileName));
             Word wordModel = gson.fromJson(reader, Word.class);
             reader.close();
-            wordModel.definitions.remove(dictionary);
+            wordModel.definitions.remove(definition);
             try {
                 Writer writer = new FileWriter(fileName);
                 gson.toJson(wordModel, writer);
@@ -93,7 +93,16 @@ public class WordTranslatorRepository {
     // translate sentence
 
 
-    // get Definitions
-
-
+    // get Definitions & Synonyms
+    /*public String getDefinitionForWord(String word, String language) {
+        String fileName = "src/main/resources/translations/" +  language + "/"  + word + ".json";
+        try {
+            Reader reader = Files.newBufferedReader(Paths.get(fileName));
+            Word wordModel = gson.fromJson(reader, Word.class);
+            reader.close();
+            return wordModel.toString();
+        } catch (Exception e) {
+            return "word not found";
+        }
+    }*/
 }
