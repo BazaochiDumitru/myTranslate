@@ -15,12 +15,4 @@ public class Definition {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
 }
